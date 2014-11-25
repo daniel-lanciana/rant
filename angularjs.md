@@ -1,6 +1,11 @@
 ![](https://raw.githubusercontent.com/zizzamia/taste-of-angularjs/master/assets/angularjs-logo.png)
 
-## Observations
+## Notes
+
+* Verbose
+* Bower for front-end dependencies (e.g. jQuery), node_modules for back-end dependencies (e.g. xml2json)
+
+## Concepts
 
 * For ansyc calls, use promises not callbacks
   * Mature, tested pattern for lifecycle of an asynchronous task
@@ -59,8 +64,6 @@ app.directive('ngSparkline', function() {
   }
 });
 ```
-* Verbose
-* Bower for front-end dependencies (e.g. jQuery), node_modules for back-end dependencies (e.g. xml2json)
 
 ## Libraries
 
