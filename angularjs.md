@@ -1,4 +1,4 @@
-![](https://raw.githubusercontent.com/zizzamia/taste-of-angularjs/master/assets/angularjs-logo.png)
+![](https://cloud.githubusercontent.com/assets/1894523/5178178/5773775c-74bb-11e4-94f9-55293ba920c8.png)
 
 ## About
 
