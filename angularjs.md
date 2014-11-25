@@ -1,10 +1,36 @@
+![](https://raw.githubusercontent.com/zizzamia/taste-of-angularjs/master/assets/angularjs-logo.png)
+
 ## Observations
 
 * For ansyc calls, use promises not callbacks
   * Mature, tested pattern for lifecycle of an asynchronous task
   * Bluebird better than (Kris Kowall's) Q. Almost as fast as callbacks...and better features. 5x slower in debug mode.
   * Advantages: catches errors, supported by jQuery, run once (once resolved), nodify/denodify existing functions
-  * Generators: new to ES6, function*, function that acts like an iterator, executes one statement at a time, .next(), yeild passed in objects. Libraries: [suspend](https://github.com/jmar777/suspend), [genny](https://github.com/spion/genny)
+```javascript
+// A promise
+function readFileOrDefault(file, defaultContent) {
+    return fs.readFile(file)
+     .then(function(fileContent) {
+        return fileContent;
+    }, function(err) {
+        return defaultContent;
+    });
+}
+```
+* Generators: new to Javascript 1.7, function that acts like an iterator, executes one statement at a time, .next(), yeild passed in objects. Libraries: [suspend](https://github.com/jmar777/suspend), [genny](https://github.com/spion/genny)
+```javascript
+// A generator
+function foo*(x) {
+    while(true) {
+        x = x * 2;
+        yield x;
+    }
+}
+
+var g = foo(2);
+g.next(); // -> 4
+g.next(); // -> 8
+```
   * Thunk: a partially-evaluated function that accepts a single callback argument. Library: [co](https://github.com/tj/co)
 ```javascript
 // A thunk
@@ -24,3 +50,4 @@ function foo(callback) {
 
 ## References
 
+* http://spion.github.io/posts/why-i-am-switching-to-promises.html (promises)
