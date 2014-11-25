@@ -7,7 +7,12 @@ Open-source MVC DI (Dependency Injection) framework maintained by Google suited 
 ## Notes
 
 * Verbose
-* Bower for front-end dependencies (e.g. jQuery), node_modules for back-end dependencies (e.g. xml2json)
+
+## Components
+
+* [Grunt](http://gruntjs.com/) for running tasks (builds, starting server, watching for changes and reloading)
+* [Bower](http://bower.io/) for front-end dependency management (e.g. jQuery)
+* [npm](https://www.npmjs.org/) (Node Package Manager) for back-end Node dependency management (e.g. xml2json)
 
 ## Concepts
 
