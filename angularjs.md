@@ -39,9 +39,36 @@ function foo(callback) {
 }
 ```
 * Modules relate to functionality and contain various classes (e.g. controller, service)
-* Directives are HTML markup attached via semantic tags (e.g. <input validate-mandatory... />)
+* Directives are HTML markup attached via semantic tags (e.g. <input validate-mandatory... />), can extend each other, controller option pre-linking (i.e. scope, not DOM operations)
+```javascript
+// A directive
+app.directive('ngSparkline', function() {
+  return {
+    restrict: 'A',
+    require: '^ngCity',
+    scope: {
+      ngCity: '@'
+    },
+    template: '<div class="sparkline"><h4>Weather for {{ngCity}}</h4></div>',
+    controller: ['$scope', '$http', function($scope, $http) {
+      $scope.getTemp = function(city) {}
+    }],
+    link: function(scope, iElement, iAttrs, ctrl) {
+      scope.getTemp(iAttrs.ngCity);
+    }
+  }
+});
+```
 * Verbose
 * Bower for front-end dependencies (e.g. jQuery), node_modules for back-end dependencies (e.g. xml2json)
+
+## Libraries
+
+* Bootstrap
+* Stylus (like SASS)
+* es5-shim (monkey patch JS to EcmaScript 5 in older browsers)
+* Respond.js (polyfill CSS3 min/max in IE8 for responsive design)
+* Karma (test runner, includes Jasmine test framework and PhantomJS browser)
 
 ## Tools
 
