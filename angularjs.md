@@ -1,5 +1,9 @@
 ![](https://raw.githubusercontent.com/zizzamia/taste-of-angularjs/master/assets/angularjs-logo.png)
 
+## About
+
+Open-source MVC DI (Dependency Injection) framework maintained by Google suited to single-page applications. Uses the prefix 'ng', which is supposed to sound like 'angular'. Angular leverages Node.js to run the back-end in Javascript (command-line JS engine).
+
 ## Notes
 
 * Verbose
@@ -67,11 +71,11 @@ app.directive('ngSparkline', function() {
 
 ## Libraries
 
-* Bootstrap
-* Stylus (like SASS)
-* es5-shim (monkey patch JS to EcmaScript 5 in older browsers)
-* Respond.js (polyfill CSS3 min/max in IE8 for responsive design)
-* Karma (test runner, includes Jasmine test framework and PhantomJS browser)
+* [UI Bootstrap](http://angular-ui.github.io/bootstrap/)
+* [Stylus](http://learnboost.github.io/stylus/) (SASS-like CSS preprocessor)
+* [es5-shim](https://github.com/es-shims/es5-shim) (monkey patch JS to EcmaScript 5 in older browsers)
+* [Respond.js](https://github.com/scottjehl/Respond) (polyfill CSS3 min/max in IE8 for responsive design)
+* [Karma](http://karma-runner.github.io/0.12/index.html) (test runner, includes Jasmine test framework and PhantomJS browser)
 
 ## Tools
 
