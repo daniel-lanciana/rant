@@ -2,7 +2,7 @@
 
 ## About
 
-Open-source MVC DI (Dependency Injection) framework maintained by Google suited to single-page applications. Uses the prefix 'ng', which is supposed to sound like 'angular'. Angular leverages Node.js to run the back-end in Javascript (command-line JS engine).
+Open-source MVC DI (Dependency Injection) framework maintained by Google suited to single-page applications. Uses the prefix 'ng', which is supposed to sound like 'angular'. Angular leverages Node.js to run the back-end in Javascript (command-line JS engine). Directive-driven.
 
 ## Notes
 
@@ -53,7 +53,7 @@ function foo(callback) {
 }
 ```
 * Modules relate to functionality and contain various classes (e.g. controller, service)
-* Directives are HTML markup attached via semantic tags (e.g. <input validate-mandatory... />), can extend each other, controller option pre-linking (i.e. scope, not DOM operations)
+* Directives are HTML markup attached via semantic tags (e.g. <input validate-mandatory... />), can extend each other, controller option pre-linking (i.e. scope, not DOM operations). Basically taglibs.
 ```javascript
 // A directive
 app.directive('ngSparkline', function() {
@@ -74,6 +74,75 @@ app.directive('ngSparkline', function() {
 });
 ```
 
+## Angular Routing
+
+### index.html
+
+* The ng-app directive defines the application by name
+* Links have a hash before them, which are intercepted (hence the single-page app pattern)
+* Scope (i.e. model) variables are within two curly braces
+* The ng-view directive displays rendered templates from links. Without it routing is not fired (and the console log empty).
+* The {{vendorScripts}} injects Bower dependencies (e.g. angular.js) to the page. Define additional scripts after.
+
+```html
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Hello World</title>
+    <link rel="stylesheet" href="css/main.css" />
+  </head>
+  <body ng-app="app">
+    <div class="contains">
+      <nav>
+        <ul>
+            <li><a href="#/foo">foo</a></li>
+        </ul>
+        <p>{{message}}</p>
+        <div ng-view></div>
+      </nav>
+      <!--(if target unoptimised)>
+        {{vendorScripts}}
+        <script src="js/app.js"></script>
+        <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.2.1/angular-route.min.js"></script>
+      <!(endif)-->   
+    </div>
+  </body>
+</html>
+```
+
+### js/app.js
+
+* Referenced from index.html
+* The template 'foo.tpl.htm' is basic HTML and can contain whatever
+
+```javascript
+(function (angular) {
+  'use strict';
+
+  // Name the application 'app', matches the ng-app directive in index.html
+  var ang = angular
+    .module('app', [
+      'ngRoute'
+    ]);
+
+  // Routing config, define request mapping to a controller and view
+  ang.config(['$routeProvider', function ($routeProvider) {
+    $routeProvider
+      .when('/foo', {
+        controller: 'fooController',
+        templateUrl: 'views/foo.tpl.htm'
+      });
+  }]);
+
+  // Controller optional (I think), add variables to the scope (i.e. model)
+  var controllers = {};
+  controllers.fooController = function($scope) {
+    $scope.message = 'Hello World';
+  };
+  ang.controller(controllers);
+})(window.angular);
+```
+
 ## Libraries
 
 * [UI Bootstrap](http://angular-ui.github.io/bootstrap/)
@@ -86,6 +155,7 @@ app.directive('ngSparkline', function() {
 
 * [Plunker](http://plnkr.co/): Edit and run AngularJS code online
 * [AngularJS Batarang](https://chrome.google.com/webstore/detail/angularjs-batarang/ighdmehidhipcmcojjgiloacoafjmpfk): Chrome extension
+* [WebStorm](https://www.jetbrains.com/webstorm/)
 
 ## References
 
