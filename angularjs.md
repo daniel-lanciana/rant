@@ -146,6 +146,7 @@ app.directive('ngSparkline', function() {
 ## Libraries
 
 * [UI Bootstrap](http://angular-ui.github.io/bootstrap/)
+* [AngularUI Router](https://github.com/angular-ui/ui-router) (enhanced angular-route, nested, URL updating, decorator dynamic routes, states)
 * [Stylus](http://learnboost.github.io/stylus/) (SASS-like CSS preprocessor)
 * [es5-shim](https://github.com/es-shims/es5-shim) (monkey patch JS to EcmaScript 5 in older browsers)
 * [Respond.js](https://github.com/scottjehl/Respond) (polyfill CSS3 min/max in IE8 for responsive design)
