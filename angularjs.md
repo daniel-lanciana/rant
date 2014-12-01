@@ -7,6 +7,7 @@ Open-source MVC DI (Dependency Injection) framework maintained by Google suited 
 ## Notes
 
 * Verbose
+* To avoid name collision, some Angular objects have a $ prefix. Do not use $ prefixes.
 
 ## Components
 
