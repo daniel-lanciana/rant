@@ -223,6 +223,7 @@ JSTL (Java Standard Tag Library) for Angular. Great for re-usable components in 
 * [Plunker](http://plnkr.co/): Edit and run AngularJS code online
 * [AngularJS Batarang](https://chrome.google.com/webstore/detail/angularjs-batarang/ighdmehidhipcmcojjgiloacoafjmpfk): Chrome extension
 * [WebStorm](https://www.jetbrains.com/webstorm/)
+* [angular-slugify](https://github.com/paulsmith/angular-slugify): Friendly URL conversion of strings
 
 ## References
 
