@@ -184,6 +184,7 @@ JSTL (Java Standard Tag Library) for Angular. Great for re-usable components in 
 ### directives.js
 
 * Separate module name 'myDirectives' for namespacing
+* The directive 'data-text' maps to just 'text' -- the 'data-' prefix is ignored
 * Uses the dependency Slugifier to convert text to friendly URLs. 'slugifier' is the dependency name, while Slug is the exposed object in the directive
 * By default directives are singleton and not very reusable (e.g. all form inputs end up being whatever the last directive is). To overcome, include the scope as either true or {}.
 * In the link function, define scope variables available within the template
@@ -223,7 +224,7 @@ JSTL (Java Standard Tag Library) for Angular. Great for re-usable components in 
 * [Plunker](http://plnkr.co/): Edit and run AngularJS code online
 * [AngularJS Batarang](https://chrome.google.com/webstore/detail/angularjs-batarang/ighdmehidhipcmcojjgiloacoafjmpfk): Chrome extension
 * [WebStorm](https://www.jetbrains.com/webstorm/)
-* [angular-slugify](https://github.com/paulsmith/angular-slugify): Friendly URL conversion of strings
+* [angular-slugify](https://github.com/paulsmith/angular-slugify): Friendly URL conversion of strings (slug is a term used by journalists referring to headline)
 
 ## References
 
