@@ -157,7 +157,7 @@ JSTL (Java Standard Tag Library) for Angular. Great for re-usable components in 
 
 ```html
 <div data-text data-label="First name" data-mandatory="true">
-   <h1>Hello</h1>
+   Hello
 </div>
 ```
 
@@ -166,7 +166,7 @@ JSTL (Java Standard Tag Library) for Angular. Great for re-usable components in 
 * Variables (e.g. {{id}}) defined in the link method of the directive Javascript
 * Demostrates use of predefined Angular directives such as ng-if and ng-repeat, which can be placed on any element
 * No simple ng-repeat iterator (e.g. for 1 to 5)?! Use getTimes() workaround.
-* The ng-transclude directive yields and outputs the contents of the parent directive -- in this case <h1>Hello</h1>
+* The ng-transclude directive yields and outputs the contents of the parent directive -- in this case 'Hello'
 
 ```html
 <div class="question">
