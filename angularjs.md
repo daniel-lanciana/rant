@@ -153,7 +153,7 @@ JSTL (Java Standard Tag Library) for Angular. Great for re-usable components in 
 
 * Add directives to existing elements such as <div>
 * Use either 'data-' or 'x-' prefixes to remain HTML5 compliant (reserved for custom tags)
-* Can't be a self-closing tag (e.g. <div ... />)
+* Can't be a self-closing tag (e.g. &lt;div ... /&gt;)
 
 ```html
 <div data-text data-label="First name" data-mandatory="true">
