@@ -75,6 +75,8 @@ app.directive('ngSparkline', function() {
   }
 });
 ```
+* Child elements prototypically inherit from parent (as opposed to class-ical)
+  * Prototype means if an object does not exist in a child element, the prototype chain is consulted ...
 
 ## Routing
 
