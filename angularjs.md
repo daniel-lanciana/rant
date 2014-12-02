@@ -6,8 +6,9 @@ Open-source MVC DI (Dependency Injection) framework maintained by Google suited 
 
 ## Notes
 
-* Verbose
+* Verbose -- both Javascript and directives.
 * To avoid name collision, some Angular objects have a $ prefix. Do not use $ prefixes.
+* Scopes can get very confusing!
 
 ## Components
 
@@ -75,7 +76,7 @@ app.directive('ngSparkline', function() {
 });
 ```
 
-## Angular Routing
+## Routing
 
 ### index.html
 
@@ -141,6 +142,70 @@ app.directive('ngSparkline', function() {
     $scope.message = 'Hello World';
   };
   ang.controller(controllers);
+})(window.angular);
+```
+
+## Directives
+
+JSTL (Java Standard Tag Library) for Angular. Great for re-usable components in HTML pages such as form elements. The example below outputs a form text input, mandatory message and the message 'Hello' three times.
+
+### index.html
+
+* Add directives to existing elements such as <div>
+* Use either 'data-' or 'x-' prefixes to remain HTML5 compliant (reserved for custom tags)
+* Can't be a self-closing tag (e.g. <div ... />)
+
+```html
+<div data-text data-label="First name" data-mandatory="true">
+   <h1>Hello</h1>
+</div>
+```
+
+### template.html
+
+* Variables (e.g. {{id}}) defined in the link method of the directive Javascript
+* Demostrates use of predefined Angular directives such as ng-if and ng-repeat, which can be placed on any element
+* No simple ng-repeat iterator (e.g. for 1 to 5)?! Use getTimes() workaround.
+* The ng-transclude directive yields and outputs the contents of the parent directive -- in this case <h1>Hello</h1>
+
+```html
+<div class="question">
+    <label>{{label}}</label>
+    <input type="text" id="{{id}}">
+    <div ng-if="mandatory === 'true'">
+        <span class="required-field">Required</span>
+    </div>
+    <div ng-repeat="i in [1,2,3]">
+        <div ng-transclude></div>
+    </div>
+</div>
+```
+
+### directives.js
+
+* Separate module name 'myDirectives' for namespacing
+* Uses the dependency Slugifier to convert text to friendly URLs. 'slugifier' is the dependency name, while Slug is the exposed object in the directive
+* By default directives are singleton and not very reusable (e.g. all form inputs end up being whatever the last directive is). To overcome, include the scope as either true or {}.
+* In the link function, define scope variables available within the template
+
+```javascript
+(function (angular) {
+  'use strict';
+
+  angular.module('myDirectives', ['slugifier'])
+    .directive('text', ['Slug', function(Slug) {
+      return {
+        scope: {},
+        templateUrl: 'template.html',
+        link: function(scope, element, attrs) {
+          // Create a friendly ID from the label
+          scope.id = Slug.slugify(attrs.label);
+          scope.label = attrs.label;
+          scope.mandatory = attrs.mandatory;
+        }
+      };
+    }])
+  ;  
 })(window.angular);
 ```
 
