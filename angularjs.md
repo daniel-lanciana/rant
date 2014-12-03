@@ -57,50 +57,6 @@ function foo(callback) {
 ```
 * Modules relate to functionality and contain various classes (e.g. controller, service)
 
-## Directives
-
-* HTML markup attached via semantic tags (e.g. <input validate-mandatory... />), can extend each other, controller option pre-linking (i.e. scope, not DOM operations). 
-* Basically Java taglibs
-* Types:
-  * Decorator:
-    * Adding behaviour (e.g. listerners, new properties, add to DOM) or intercept behaviour (override events, global listeneers) of existing elements
-    * Can co-exist
-    * No need to change HTML
-    * Usually elements, but possible to decorate attribute-directives
-    * Add to the 'link:' function (i.e. when element linked to DOM and receives $scope)
-  * Component:
-    * Has state (usually isolate scope: {...})
-    * Change HMTL to add attributes
-    * Be careful of adding multiple directives to an element (may break each other)
-    * Internal state -- optionally linked to parent properties (e.g. scope: {...})
-  * Template:
-    * Basic templating (e.g. templateUrl)
-    * Usually no state required
-    * Doesn't support dynamic directives (e.g. can't add ng-hide to an element on-the-fly)
-  * Collaborative:
-    * Relationship between directives (e.g. inputs and forms)
-    * Collaboration between directives through controllers
-
-```javascript
-// A directive
-app.directive('ngSparkline', function() {
-  return {
-    restrict: 'A',
-    require: '^ngCity',
-    scope: {
-      ngCity: '@'
-    },
-    template: '<div class="sparkline"><h4>Weather for {{ngCity}}</h4></div>',
-    controller: ['$scope', '$http', function($scope, $http) {
-      $scope.getTemp = function(city) {}
-    }],
-    link: function(scope, iElement, iAttrs, ctrl) {
-      scope.getTemp(iAttrs.ngCity);
-    }
-  }
-});
-```
-
 ## Scope
 
 * Child elements prototypically inherit from parent (as opposed to class-ical)
@@ -194,7 +150,27 @@ scope: { interpolatedProp: '@interpolated', twowayBindingProp: '=twowayBinding' 
 
 ## Directives
 
-JSTL (Java Standard Tag Library) for Angular. Great for re-usable components in HTML pages such as form elements. The example below outputs a form text input, mandatory message and the message 'Hello' three times.
+JSTL (Java Standard Tag Library) semantic tag attributes for Angular. Great for re-usable components in HTML pages such as form elements. The example below outputs a form text input, mandatory message and the message 'Hello' three times.
+
+* Types:
+  * Decorator:
+    * Adding behaviour (e.g. listerners, new properties, add to DOM) or intercept behaviour (override events, global listeneers) of existing elements
+    * Can co-exist
+    * No need to change HTML
+    * Usually elements, but possible to decorate attribute-directives
+    * Add to the 'link:' function (i.e. when element linked to DOM and receives $scope)
+  * Component:
+    * Has state (usually isolate scope: {...})
+    * Change HMTL to add attributes
+    * Be careful of adding multiple directives to an element (may break each other)
+    * Internal state -- optionally linked to parent properties (e.g. scope: {...})
+  * Template:
+    * Basic templating (e.g. templateUrl)
+    * Usually no state required
+    * Doesn't support dynamic directives (e.g. can't add ng-hide to an element on-the-fly)
+  * Collaborative:
+    * Relationship between directives (e.g. inputs and forms)
+    * Collaboration between directives through controller methods (i.e. scope communication before DOM operations)
 
 ### index.html
 
