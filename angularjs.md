@@ -77,7 +77,7 @@ function foo(callback) {
     * Basic templating (e.g. templateUrl)
     * Usually no state required
     * Doesn't support dynamic directives (e.g. can't add ng-hide to an element on-the-fly)
-  * Collaborative Components:
+  * Collaborative:
     * Relationship between directives (e.g. inputs and forms)
     * Collaboration between directives through controllers
 
