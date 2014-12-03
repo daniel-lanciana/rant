@@ -8,7 +8,7 @@ Open-source MVC DI (Dependency Injection) framework maintained by Google suited 
 
 * Verbose -- both Javascript and directives.
 * To avoid name collision, some Angular objects have a $ prefix. Do not use $ prefixes.
-* Scopes can get very confusing!
+* Prototypical inheritance and scopes can be a bit hairy
 
 ## Components
 
@@ -75,8 +75,24 @@ app.directive('ngSparkline', function() {
   }
 });
 ```
+
+## Scope
+
 * Child elements prototypically inherit from parent (as opposed to class-ical)
-  * Prototype means if an object does not exist in a child element, the prototype chain is consulted ...
+  * Prototype means if an object or method does not exist in a child element, the prototype chain is consulted (i.e. traverses up all parent scopes until found or hits root)
+  * If we read childScope.propertyX, and childScope has propertyX, then the prototype chain is not consulted. If we set childScope.propertyX, the prototype chain is not consulted.
+  * Modifying objects (by value) creates on the child, modifying object properties (by reference) modifies the parent object (if exists). Example assuming child has no object named 'array': child.array[1] = 1 (modifies parent object), child.array = [1, 2] (creates new object on child)
+* Angular prototypicals: ng-repeat, ng-include, ng-switch, ng-controller, directive with scope: true, directive with transclude: true. Directives with scope: {...} inherit an isolated scope. Default directives don't create a new scope, which can lead to DOM clobbering (overwriting an existing element). 
+  * Always access parent scope with $parent
+  * Solutions for primatives (to modify parent not create on child) are $parent.foo or setter in parent. Issues with 2-way data binding for forms not updating the controller scope!
+  * The ng-repeat creates a new scope for each iteration
+  * Services should be used to share data between controllers -- not scope inheritance (tightly coupled)
+  * Directives should define isolated scopes to avoid accidentally modifying the parent scope. Operator '=' for 2-way binding, '@' for 1-way binding (i.e. read-only)
+  * Attributes must be specified for each parent property for each binding
+```
+<my-directive interpolated="{{parentProp1}}" twowayBinding="parentProp2"> 
+scope: { interpolatedProp: '@interpolated', twowayBindingProp: '=twowayBinding' }
+```
 
 ## Routing
 
@@ -231,3 +247,4 @@ JSTL (Java Standard Tag Library) for Angular. Great for re-usable components in 
 ## References
 
 * http://spion.github.io/posts/why-i-am-switching-to-promises.html (promises)
+* http://stackoverflow.com/questions/14049480/what-are-the-nuances-of-scope-prototypal-prototypical-inheritance-in-angularjs (prototypical inheritance and scopes)
