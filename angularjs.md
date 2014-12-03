@@ -7,6 +7,7 @@ Open-source MVC DI (Dependency Injection) framework maintained by Google suited 
 ## Notes
 
 * Verbose -- both Javascript and directives.
+* Always check to see if a directive already exists (e.g. ng-minlength)
 * To avoid name collision, some Angular objects have a $ prefix. Do not use $ prefixes.
 * Prototypical inheritance and scopes can be a bit hairy
 
@@ -55,7 +56,31 @@ function foo(callback) {
 }
 ```
 * Modules relate to functionality and contain various classes (e.g. controller, service)
-* Directives are HTML markup attached via semantic tags (e.g. <input validate-mandatory... />), can extend each other, controller option pre-linking (i.e. scope, not DOM operations). Basically taglibs.
+
+## Directives
+
+* HTML markup attached via semantic tags (e.g. <input validate-mandatory... />), can extend each other, controller option pre-linking (i.e. scope, not DOM operations). 
+* Basically Java taglibs
+* Types:
+  * Decorator:
+    * Adding behaviour (e.g. listerners, new properties, add to DOM) or intercept behaviour (override events, global listeneers) of existing elements
+    * Can co-exist
+    * No need to change HTML
+    * Usually elements, but possible to decorate attribute-directives
+    * Add to the 'link:' function (i.e. when element linked to DOM and receives $scope)
+  * Component:
+    * Has state (usually isolate scope: {...})
+    * Change HMTL to add attributes
+    * Be careful of adding multiple directives to an element (may break each other)
+    * Internal state -- optionally linked to parent properties (e.g. scope: {...})
+  * Template:
+    * Basic templating (e.g. templateUrl)
+    * Usually no state required
+    * Doesn't support dynamic directives (e.g. can't add ng-hide to an element on-the-fly)
+  * Collaborative Components:
+    * Relationship between directives (e.g. inputs and forms)
+    * Collaboration between directives through controllers
+
 ```javascript
 // A directive
 app.directive('ngSparkline', function() {
@@ -88,7 +113,7 @@ app.directive('ngSparkline', function() {
     * isolate scope -- directive with scope: {...}. This one is not prototypal, but '=', '@', and '&' provide a mechanism to access parent scope properties, via attributes.
     * transcluded scope -- directive with transclude: true. This one is also normal prototypal scope inheritance, but it is also a sibling of any isolate scope.
     * For all scopes (prototypal or not), Angular always tracks a parent-child relationship (i.e., a hierarchy), via properties $parent and $$childHead and $$childTail.
-* Default directives don't create a new scope, which can lead to DOM clobbering (overwriting an existing element). 
+* Default directives don't create a new scope, which can lead to DOM clobbering (overwriting an existing element, leaking state). 
   * Solutions for primatives (to modify parent not create on child) are $parent.foo or setter in parent. Issues with 2-way data binding for forms not updating the controller scope!
   * Services should be used to share data between controllers -- not scope inheritance (tightly coupled)
   * Directives should define isolated scopes to avoid accidentally modifying the parent scope. Operator '=' for 2-way binding, '@' for 1-way binding (i.e. read-only)
@@ -252,3 +277,4 @@ JSTL (Java Standard Tag Library) for Angular. Great for re-usable components in 
 
 * http://spion.github.io/posts/why-i-am-switching-to-promises.html (promises)
 * http://stackoverflow.com/questions/14049480/what-are-the-nuances-of-scope-prototypal-prototypical-inheritance-in-angularjs (prototypical inheritance and scopes)
+* https://code.angularjs.org/1.2.23/docs/api/ng/directive/a (API docs for directives)
