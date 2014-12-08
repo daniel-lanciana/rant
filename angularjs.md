@@ -249,6 +249,13 @@ JSTL (Java Standard Tag Library) semantic tag attributes for Angular. Great for 
 * [WebStorm](https://www.jetbrains.com/webstorm/)
 * [angular-slugify](https://github.com/paulsmith/angular-slugify): Friendly URL conversion of strings (slug is a term used by journalists referring to headline)
 
+## TODO
+
+* CSS/Sprites
+* Unit tests (directives, services, controllers)
+* Model (multi-form)
+* Services (API)
+
 ## References
 
 * http://spion.github.io/posts/why-i-am-switching-to-promises.html (promises)
