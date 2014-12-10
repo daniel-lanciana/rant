@@ -233,6 +233,29 @@ JSTL (Java Standard Tag Library) semantic tag attributes for Angular. Great for 
 })(window.angular);
 ```
 
+## Navigation
+
+* Apply the class 'active' to the current link using ng-class, which calls isActive() in the controller
+
+### index.html
+
+```html
+<div ng-controller="NavController">
+ <a ui-sref="foo" ng-class="{ active: isActive('/foo') }">My link</a></li>
+</div>
+```
+
+### controller.js
+
+```javascript
+angular.module('dcazApp')
+    .controller('NavController', ['$scope', '$location', function($scope, $location) {
+      $scope.isActive = function (viewLocation) {
+        return viewLocation === $location.path();
+      };
+    }]);
+```
+
 ## Libraries
 
 * [UI Bootstrap](http://angular-ui.github.io/bootstrap/)
