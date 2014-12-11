@@ -278,6 +278,9 @@ angular.module('dcazApp')
 * Unit tests (directives, services, controllers)
 * Model (multi-form)
 * Services (API)
+* https://github.com/sydcanem/angularjs-testing-cheat-sheet (testing cheat sheet)
+* http://jasmine.github.io/2.0/introduction.html (Jasmine docs)
+* http://quickleft.com/blog/angularjs-unit-testing-for-real-though (unit testin article)
 
 ## References
 
