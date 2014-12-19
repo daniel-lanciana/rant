@@ -296,12 +296,12 @@ describe('myController', function () {
     angular.mock.module('myAngularModule');
     angular.mock.module('myServiceModule');
 
-    // Provider service name e.g. angular.module.provider('MyService')
-    inject(function ($controller, $state, $rootScope, MyService) {
+    // Provider service name e.g. angular.module.provider('myServiceName')
+    inject(function ($controller, $state, $rootScope, myServiceName) {
       state = $state;
       // No controller scope available, use root scope instead
       scope = $rootScope.$new();
-      service = MyService;
+      service = myServiceName;
       // Initialise and instantiate the controller for testing
       controller = $controller('myController', {
         $scope: scope,
@@ -326,7 +326,7 @@ describe('myController', function () {
   });
 });
 ```
-### Directives
+### Directive
 
 ```javascript
 'use strict';
@@ -335,7 +335,7 @@ describe('myController', function () {
 describe('myDirective', function () {
   var compile, scope;
 
-  // Import the checkbox and common modules
+  // Inject the directive
   beforeEach(angular.mock.module('myDirective'));
   // Import the input HTML templates (ng-html2js-preprocessor)
   beforeEach(module('myTemplates'));
