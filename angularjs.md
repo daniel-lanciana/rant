@@ -256,7 +256,7 @@ app.directive("simple", function(){
 ### index.html
 
 ```html
-<div ng-controller="NavController">
+<div ng-controller="myController">
  <a ui-sref="foo" ng-class="{ active: isActive('/foo') }">My link</a></li>
 </div>
 ```
@@ -264,8 +264,8 @@ app.directive("simple", function(){
 ### controller.js
 
 ```javascript
-angular.module('dcazApp')
-    .controller('NavController', ['$scope', '$location', function($scope, $location) {
+angular.module('myApp')
+    .controller('myController', ['$scope', '$location', function($scope, $location) {
       $scope.isActive = function (viewLocation) {
         return viewLocation === $location.path();
       };
@@ -288,7 +288,7 @@ angular.module('dcazApp')
 'use strict';
 
 // DSL notation from Jasmine
-describe('MyController', function () {
+describe('myController', function () {
   // Class variable for use in tests
   var controller, state, scope, service;
 
@@ -303,7 +303,7 @@ describe('MyController', function () {
       scope = $rootScope.$new();
       service = MyService;
       // Initialise and instantiate the controller for testing
-      controller = $controller('MyController', {
+      controller = $controller('myController', {
         $scope: scope,
         $state: state,
         $service: service
@@ -332,13 +332,13 @@ describe('MyController', function () {
 'use strict';
 
 // DSL notation from Jasmine
-describe('MyDirective', function () {
+describe('myDirective', function () {
   var compile, scope;
 
   // Import the checkbox and common modules
-  beforeEach(angular.mock.module('form.ui.formselect'));
+  beforeEach(angular.mock.module('myDirective'));
   // Import the input HTML templates (ng-html2js-preprocessor)
-  beforeEach(module('my.templates'));
+  beforeEach(module('myTemplates'));
   // Inject the compile and scope dependencies
   beforeEach(inject(['$compile', '$rootScope', function ($c, $r) {
     compile = $c;
@@ -375,13 +375,13 @@ module.exports = function(config) {
       'node_modules/karma-jasmine-matchers/node_modules/jasmine-expect/dist/jasmine-matchers.js',
       'src/modules/common/_app.js',               // Need to load the main module first
       'src/modules/**/*.js',                      // Source files
-      'src/modules/common/form/templates/*.html', // HTML templates (ng-html2js-preprocessor)
+      'src/modules/templates/*.html',             // HTML templates (ng-html2js-preprocessor)
       'test/modules/**/*.spec.js'                 // Tests
     ],
     // preprocess matching files before serving them to the browser (ng-html2js-preprocessor)
     // available preprocessors: https://npmjs.org/browse/keyword/karma-preprocessor
     preprocessors: {
-      'src/modules/common/form/templates/*.html': ['ng-html2js']
+      'src/modules/templates/*.html': ['ng-html2js']
     },
     // test results reporter to use
     // available reporters: https://npmjs.org/browse/keyword/karma-reporter
@@ -408,10 +408,10 @@ module.exports = function(config) {
     ngHtml2JsPreprocessor: {
       // If your build process changes the path to your templates,
       // use stripPrefix and prependPrefix to adjust it.
-      stripPrefix: 'src/modules/common/form/templates/',
-      prependPrefix: 'views/common/form/templates/',
+      stripPrefix: 'src/modules/templates/',
+      prependPrefix: 'views/templates/',
       // the name of the Angular module to create and expose
-      moduleName: 'my.templates'
+      moduleName: 'myTemplates'
     },
     // Continuous Integration mode
     // if true, Karma captures browsers, runs the tests and exits
