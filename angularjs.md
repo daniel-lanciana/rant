@@ -150,7 +150,7 @@ scope: { interpolatedProp: '@interpolated', twowayBindingProp: '=twowayBinding' 
 
 ## Directives
 
-JSTL (Java Standard Tag Library) semantic tag attributes for Angular. Great for re-usable components in HTML pages such as form elements. The example below outputs a form text input, mandatory message and the message 'Hello' three times.
+JSTL (Java Standard Tag Library) semantic tag attributes for Angular. Great for re-usable components in HTML pages such as form elements. The example below outputs a form text input, mandatory message and the message 'Hello' three times. Leverages the Angular compiler to attach behavior to any HTML element or create new elements. 
 
 * Types:
   * Decorator:
@@ -171,6 +171,20 @@ JSTL (Java Standard Tag Library) semantic tag attributes for Angular. Great for 
   * Collaborative:
     * Relationship between directives (e.g. inputs and forms)
     * Collaboration between directives through controller methods (i.e. scope communication before DOM operations)
+* Compile v Link
+  * Compile is for changing the DOM structure before rendering. After compile, link is called.
+  * Link is for existing element listeners and copying content from the scope (e.g. to display)
+
+```javascript
+app.directive("simple", function(){
+    return {
+        link: function(scope, element, attributes){
+        },
+        controller: function($scope, $element){
+        }
+    };
+});
+```
 
 ### index.html
 
