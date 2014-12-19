@@ -56,6 +56,7 @@ function foo(callback) {
 }
 ```
 * Modules relate to functionality and contain various classes (e.g. controller, service)
+* For environments (e.g. dev, prod), use grunt-ng-constant to manage an environment-specific config file. For mocking APIs, use a library like Mockjax.
 
 ## Scope
 
@@ -301,3 +302,4 @@ angular.module('dcazApp')
 * http://spion.github.io/posts/why-i-am-switching-to-promises.html (promises)
 * http://stackoverflow.com/questions/14049480/what-are-the-nuances-of-scope-prototypal-prototypical-inheritance-in-angularjs (prototypical inheritance and scopes)
 * https://code.angularjs.org/1.2.23/docs/api/ng/directive/a (API docs for directives)
+* http://mindthecode.com/how-to-use-environment-variables-in-your-angular-application/ (multiple environments)
