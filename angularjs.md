@@ -9,6 +9,7 @@ Open-source MVC DI (Dependency Injection) framework maintained by Google suited 
 * Verbose -- both Javascript and directives.
 * Always check to see if a directive already exists (e.g. ng-minlength)
 * To avoid name collision, some Angular objects have a $ prefix. Do not use $ prefixes.
+* For readability, parameters can have underscores which are ignored at runtime (i.e. _foo_ is the same as foo, but allows developers to easily differentiate)
 * Prototypical inheritance and scopes can be a bit hairy
 
 ## Components
@@ -271,6 +272,154 @@ angular.module('dcazApp')
     }]);
 ```
 
+## Unit Testing
+
+* Uses Jasmine (and Jasmine matchers?) executed by the Karma runner
+* Karma can be run by Grunt build tool (e.g. grunt test) or standalone in WebStorm
+   * Must define all source and tests files to run -- in order (fragile)
+   * No ability to run (or re-run) a single test?!?
+   * To run tests, right click karma.conf.js and select 'run'
+   * For testing templateUrl in directives, need to use the ng-html2js-preprocessor plugin, which can be a bit magical to set up. When working it loads all templates and exposes in an angular module for tests to use.
+* Test file naming convention is foo.spec.js
+
+### Controller
+
+```javascript
+'use strict';
+
+// DSL notation from Jasmine
+describe('MyController', function () {
+  // Class variable for use in tests
+  var controller, state, scope, service;
+
+  beforeEach(function () {
+    angular.mock.module('myAngularModule');
+    angular.mock.module('myServiceModule');
+
+    // Provider service name e.g. angular.module.provider('MyService')
+    inject(function ($controller, $state, $rootScope, MyService) {
+      state = $state;
+      // No controller scope available, use root scope instead
+      scope = $rootScope.$new();
+      service = MyService;
+      // Initialise and instantiate the controller for testing
+      controller = $controller('MyController', {
+        $scope: scope,
+        $state: state,
+        $service: service
+      });
+    });
+  });
+
+  it('should be able to access the controller', function () {
+    expect(controller).not.toEqual(null);
+  });
+  
+  it('should return hello world', function () {
+    expect(controller.printme()).toEqual('hello world');
+  });
+
+  it('should call the method foo()', function () {
+    spyOn(state, 'go');
+    controller.foo();
+    expect($state.go).toHaveBeenCalled();
+  });
+});
+```
+### Directives
+
+```javascript
+'use strict';
+
+// DSL notation from Jasmine
+describe('MyDirective', function () {
+  var compile, scope;
+
+  // Import the checkbox and common modules
+  beforeEach(angular.mock.module('form.ui.formselect'));
+  // Import the input HTML templates (ng-html2js-preprocessor)
+  beforeEach(module('my.templates'));
+  // Inject the compile and scope dependencies
+  beforeEach(inject(['$compile', '$rootScope', function ($c, $r) {
+    compile = $c;
+    scope = $r.$new();
+  }]));
+
+  it('should output a DIV with "Hello World" inside', function () {
+    var elem = angular.element('<my-hello-world-directive></my-hello-world-directive>');
+    $compile(elem)(scope);
+    scope.$digest();
+    expect(elem[0].outerHTML).toEqual('<div>Hello World</div>');
+  });
+});  
+```
+
+### karma.conf.js
+
+```javascript
+module.exports = function(config) {
+  config.set({
+    // base path that will be used to resolve all patterns (eg. files, exclude)
+    basePath: '../../',
+    // frameworks to use
+    // available frameworks: https://npmjs.org/browse/keyword/karma-adapter
+    frameworks: [
+      'jasmine', 
+      'jasmine-matchers'
+    ],
+    // list of files / patterns to load in the browser
+    files: [
+      'bower_components/angular/angular.js',
+      'bower_components/angular-mocks/angular-mocks.js',
+      'bower_components/angular-ui-router/release/angular-ui-router.js',
+      'node_modules/karma-jasmine-matchers/node_modules/jasmine-expect/dist/jasmine-matchers.js',
+      'src/modules/common/_app.js',               // Need to load the main module first
+      'src/modules/**/*.js',                      // Source files
+      'src/modules/common/form/templates/*.html', // HTML templates (ng-html2js-preprocessor)
+      'test/modules/**/*.spec.js'                 // Tests
+    ],
+    // preprocess matching files before serving them to the browser (ng-html2js-preprocessor)
+    // available preprocessors: https://npmjs.org/browse/keyword/karma-preprocessor
+    preprocessors: {
+      'src/modules/common/form/templates/*.html': ['ng-html2js']
+    },
+    // test results reporter to use
+    // available reporters: https://npmjs.org/browse/keyword/karma-reporter
+    reporters: ['progress'],
+    // web server port
+    port: 9876,
+    // enable / disable colors in the output (reporters and logs)
+    colors: true,
+    // level of logging
+    // possible values: config.LOG_DISABLE || config.LOG_ERROR || config.LOG_WARN || config.LOG_INFO || config.LOG_DEBUG
+    logLevel: config.LOG_INFO,
+    // enable / disable watching file and executing tests whenever any file changes
+    autoWatch: false,
+    // start these browsers
+    // available browser launchers: https://npmjs.org/browse/keyword/karma-launcher
+    browsers: ['PhantomJS'],
+    plugins: [
+      'karma-phantomjs-launcher',
+      'karma-jasmine-jquery',
+      'karma-jasmine',
+      'karma-jasmine-matchers',
+      'karma-ng-html2js-preprocessor' 
+    ],
+    ngHtml2JsPreprocessor: {
+      // If your build process changes the path to your templates,
+      // use stripPrefix and prependPrefix to adjust it.
+      stripPrefix: 'src/modules/common/form/templates/',
+      prependPrefix: 'views/common/form/templates/',
+      // the name of the Angular module to create and expose
+      moduleName: 'my.templates'
+    },
+    // Continuous Integration mode
+    // if true, Karma captures browsers, runs the tests and exits
+    singleRun: false
+  });
+};
+```
+
 ## Libraries
 
 * [UI Bootstrap](http://angular-ui.github.io/bootstrap/)
@@ -279,13 +428,14 @@ angular.module('dcazApp')
 * [es5-shim](https://github.com/es-shims/es5-shim) (monkey patch JS to EcmaScript 5 in older browsers)
 * [Respond.js](https://github.com/scottjehl/Respond) (polyfill CSS3 min/max in IE8 for responsive design)
 * [Karma](http://karma-runner.github.io/0.12/index.html) (test runner, includes Jasmine test framework and PhantomJS browser)
+* [Grunt Ng Constant](https://github.com/werk85/grunt-ng-constant) (environment properties config file)
 
 ## Tools
 
 * [Plunker](http://plnkr.co/): Edit and run AngularJS code online
 * [AngularJS Batarang](https://chrome.google.com/webstore/detail/angularjs-batarang/ighdmehidhipcmcojjgiloacoafjmpfk): Chrome extension
 * [WebStorm](https://www.jetbrains.com/webstorm/)
-* [angular-slugify](https://github.com/paulsmith/angular-slugify): Friendly URL conversion of strings (slug is a term used by journalists referring to headline)
+* [angular-slugify](https://github.com/paulsmith/angular-slugify): Friendly URL conversion of strings (slug is a term used by journalists referring to headline. Broken with Grunt minify!)
 
 ## TODO
 
