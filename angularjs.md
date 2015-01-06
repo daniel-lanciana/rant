@@ -58,6 +58,12 @@ function foo(callback) {
 ```
 * Modules relate to functionality and contain various classes (e.g. controller, service)
 * For environments (e.g. dev, prod), use grunt-ng-constant to manage an environment-specific config file. For mocking APIs, use a library like Mockjax.
+* Injection order must be replicated in order in the function within a controller.
+```javascript
+angular.module('myModule').controller('myController', ['$scope', '$state', 'FOO',
+  function ($scope, $state, FOO) {
+    ...
+```
 
 ## Scope
 
