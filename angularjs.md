@@ -280,7 +280,7 @@ angular.module('myApp')
 
 ## Unit Testing
 
-* Uses Jasmine (and Jasmine matchers?) executed by the Karma runner
+* Uses Jasmine (and Jasmine matchers = more powerful comparitors) executed by the Karma runner
 * Karma can be run by Grunt build tool (e.g. grunt test) or standalone in WebStorm
    * Must define all source and tests files to run -- in order (fragile)
    * No ability to run (or re-run) a single test?!?
