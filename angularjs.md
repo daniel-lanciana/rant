@@ -64,6 +64,7 @@ angular.module('myModule').controller('myController', ['$scope', '$state', 'FOO'
   function ($scope, $state, FOO) {
     ...
 ```
+* Module lifecyle comprised of config (set up providers, directives, filters...) then run (compile DOM, run application) phases
 
 ## Scope
 
@@ -86,6 +87,51 @@ angular.module('myModule').controller('myController', ['$scope', '$state', 'FOO'
 <my-directive interpolated="{{parentProp1}}" twowayBinding="parentProp2"> 
 scope: { interpolatedProp: '@interpolated', twowayBindingProp: '=twowayBinding' }
 ```
+
+## Dependency Injection
+
+* $provider service creates injectable things (i.e. services)
+* Provider automatically named fooProvider (where foo is the name of the service) 
+* .factory(), .provider() and .value() are shortcuts (less configuration) for adding the same provider
+* .constant() and .value() always return a static value. .constant() has no provider suffix and can be injected into a module's config().
+```javascript
+// All 3 do exactlyt the same thing
+myMod.provider('foo', function() {
+  this.$get = function() {
+    return function(name) {
+      alert("Hello, " + name);
+    };
+  };
+});
+
+// No get required
+myMod.factory('foo', function() {
+  return function(name) {
+    alert("Hello, " + name);
+  };
+});
+
+// Only one function
+myMod.value('foo', function(name) {
+  alert("Hello, " + name);
+});
+```
+* $injector actually creates instances from $provide
+* $injector knows how to inject itself!
+* Injector returns singleton of services
+* Can inject into any controller, directive, service, filter or $get method of a provider (all these called with $injector.invoke)
+* Can inject providers only (e.g. fooProvider not foo) into a module config() 
+```javascript
+// Get instance of service
+var foo = $injector.get('foo');
+
+// Inject services into functions
+var myFunction = function(foo) {
+  foo('Ford Prefect');
+};
+$injector.invoke(myFunction);
+```
+* Controllers, filters and directives use their own providers and can't be injected into other things
 
 ## Routing
 
@@ -459,3 +505,4 @@ module.exports = function(config) {
 * http://stackoverflow.com/questions/14049480/what-are-the-nuances-of-scope-prototypal-prototypical-inheritance-in-angularjs (prototypical inheritance and scopes)
 * https://code.angularjs.org/1.2.23/docs/api/ng/directive/a (API docs for directives)
 * http://mindthecode.com/how-to-use-environment-variables-in-your-angular-application/ (multiple environments)
+* https://github.com/angular/angular.js/wiki/Understanding-Dependency-Injection (DI explained)
