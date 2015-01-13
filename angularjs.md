@@ -92,11 +92,10 @@ scope: { interpolatedProp: '@interpolated', twowayBindingProp: '=twowayBinding' 
 
 * $provider service creates injectable things (i.e. services)
 * Provider automatically named fooProvider (where foo is the name of the service) 
-* .factory(), .provider() and .value() are shortcuts (less configuration) for adding the same provider
-* .constant() and .value() always return a static value. .constant() has no provider suffix and can be injected into a module's config().
+* Provider, factory and value are shortcuts (less configuration) for adding the same provider
 ```javascript
 // All 3 do exactlyt the same thing
-myMod.provider('foo', function() {
+myModule.provider('foo', function() {
   this.$get = function() {
     return function(name) {
       alert("Hello, " + name);
@@ -105,16 +104,42 @@ myMod.provider('foo', function() {
 });
 
 // No get required
-myMod.factory('foo', function() {
+myModule.factory('foo', function() {
   return function(name) {
     alert("Hello, " + name);
   };
 });
 
 // Only one function
-myMod.value('foo', function(name) {
+myModule.value('foo', function(name) {
   alert("Hello, " + name);
 });
+```
+* .constant() and .value() always return a static value. .constant() has no provider suffix and can be injected into a module's config().
+```javascript
+// Value returns a simple object
+myModule.value('foo', 999);
+
+// Factory builds/returns a reused (more complex) object
+myModule.factory('foo', function(aaa) {
+    return 'a value' + aaa;
+});
+
+// Service singleton containing functions
+function MyService() {
+    this.doIt = function() {
+        console.log('done');
+    }
+}
+myModule.service('foo', MyService);
+
+// Constants are static
+myModule.constant('foo', 'hello world');
+
+// Providers more flexible form of factory (see above for example)
+
+// Usage
+myModule.controller("MyController", function($scope, foo) {
 ```
 * $injector actually creates instances from $provide
 * $injector knows how to inject itself!
@@ -132,6 +157,14 @@ var myFunction = function(foo) {
 $injector.invoke(myFunction);
 ```
 * Controllers, filters and directives use their own providers and can't be injected into other things
+* Dependencies between modules
+```javascript
+var foo = angular.module('foo', []);
+foo.value('myValue', '12345');
+// Inject the foo dependency, exposing all foo's providers (in this case 'myValue')
+var bar = angular.module('bar', ['foo']);
+bar.controller("MyController", function($scope, myValue) { }
+```
 
 ## Routing
 
