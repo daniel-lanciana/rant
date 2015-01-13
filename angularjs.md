@@ -115,7 +115,7 @@ myModule.value('foo', function(name) {
   alert("Hello, " + name);
 });
 ```
-* .constant() and .value() always return a static value. .constant() has no provider suffix and can be injected into a module's config().
+* Constant and value always return a static value. Constant has no provider suffix and can be injected into a module's config.
 ```javascript
 // Value returns a simple object
 myModule.value('foo', 999);
