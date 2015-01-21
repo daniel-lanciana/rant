@@ -6,11 +6,15 @@ Open-source MVC DI (Dependency Injection) framework maintained by Google suited 
 
 ## Notes
 
+* Suited for single-page ADD (API-Driven Development, RESTful backend) apps
+* Not suited to dynamic form creation (expressions evaluated after directives causes binding issues)
+* Lots of automagic in the background -- great when working, painful when not (wiring, internal state, logs lacking)
 * Verbose -- both Javascript and directives.
 * Always check to see if a directive already exists (e.g. ng-minlength)
 * To avoid name collision, some Angular objects have a $ prefix. Do not use $ prefixes.
 * For readability, parameters can have underscores which are ignored at runtime (i.e. _foo_ is the same as foo, but allows developers to easily differentiate)
 * Prototypical inheritance and scopes can be a bit hairy
+* IE8 support discontinued in Angular 1.3, IE8 compatibility issues with 1.2 (e.g. <ng-form> directive)
 
 ## Components
 
@@ -258,6 +262,13 @@ JSTL (Java Standard Tag Library) semantic tag attributes for Angular. Great for 
   * Collaborative:
     * Relationship between directives (e.g. inputs and forms)
     * Collaboration between directives through controller methods (i.e. scope communication before DOM operations)
+* Attribute expressions are PAINFUL
+  * If directives has inner HTML, must remove attributes off the parent element. Issue removing expression attributes required using a prefix (e.g. 'data-id' instead of 'id')
+  * Dynamically setting a directive name attribute causes ng-pattern validation to break?!
+  * Requires complex workarounds -- big oversight
+  * Inconsistency between attributes (e.g. ng-if takes 'foo.bar' but ng-require takes '{{foo.bar}}') -- should gracefully fallback
+  * For access to the actual variable (not the expression), must call $compile within a directive. This can cause an infinite loop, 
+* The input states $dirty and $pristine are a very nice touch
 * Compile v Link
   * Compile is for changing the DOM structure before rendering. After compile, link is called.
   * Link is for existing element listeners and copying content from the scope (e.g. to display)
@@ -364,6 +375,7 @@ angular.module('myApp')
    * Must define all source and tests files to run -- in order (fragile)
    * No ability to run (or re-run) a single test?!?
    * To run tests, right click karma.conf.js and select 'run'
+   * Experienced regular expressions stopped/started working (unpredictable/unstable)
    * For testing templateUrl in directives, need to use the ng-html2js-preprocessor plugin, which can be a bit magical to set up. When working it loads all templates and exposes in an angular module for tests to use.
 * Test file naming convention is foo.spec.js
 
@@ -539,3 +551,4 @@ module.exports = function(config) {
 * https://code.angularjs.org/1.2.23/docs/api/ng/directive/a (API docs for directives)
 * http://mindthecode.com/how-to-use-environment-variables-in-your-angular-application/ (multiple environments)
 * https://github.com/angular/angular.js/wiki/Understanding-Dependency-Injection (DI explained)
+* https://github.com/angular/angular.js/issues/1404 (dynamic validation workarounds)
