@@ -8,7 +8,7 @@ Open-source MVC DI (Dependency Injection) framework maintained by Google suited 
 
 * Suited for single-page ADD (API-Driven Development, RESTful backend) apps
 * Not suited to dynamic form creation (expressions evaluated after directives causes binding issues)
-* Lots of automagic in the background -- great when working, painful when not (wiring, internal state, logs lacking)
+* Lots of automagic in the background -- great when working, PAINFUL when not (wiring, internal state, logs lacking)
 * Verbose -- both Javascript and directives.
 * Always check to see if a directive already exists (e.g. ng-minlength)
 * To avoid name collision, some Angular objects have a $ prefix. Do not use $ prefixes.
@@ -263,11 +263,12 @@ JSTL (Java Standard Tag Library) semantic tag attributes for Angular. Great for 
     * Relationship between directives (e.g. inputs and forms)
     * Collaboration between directives through controller methods (i.e. scope communication before DOM operations)
 * Attribute expressions are PAINFUL
-  * If directives has inner HTML, must remove attributes off the parent element. Issue removing expression attributes required using a prefix (e.g. 'data-id' instead of 'id')
+  * If directives have inner HTML, must remove attributes off the parent element. Issue removing expression attributes required using a prefix (e.g. 'data-id' instead of 'id')
   * Dynamically setting a directive name attribute causes ng-pattern validation to break?!
   * Requires complex workarounds -- big oversight
   * Inconsistency between attributes (e.g. ng-if takes 'foo.bar' but ng-require takes '{{foo.bar}}') -- should gracefully fallback
-  * For access to the actual variable (not the expression), must call $compile within a directive. This can cause an infinite loop, 
+  * For access to the actual variable (not the expression), must call $compile within a directive. This can cause an infinite loop, and requires setting terminal:true and priority:10000 to ensure it gets compiled first.
+  * Default ng-pattern validation does not display error messages if the name attribute contains an expression! WTF!!
 * The input states $dirty and $pristine are a very nice touch
 * Compile v Link
   * Compile is for changing the DOM structure before rendering. After compile, link is called.
