@@ -375,7 +375,7 @@ angular.module('myApp')
    * Must define all source and tests files to run -- in order (fragile)
    * No ability to run (or re-run) a single test?!?
    * To run tests, right click karma.conf.js and select 'run'
-   * Experienced regular expressions stopped/started working (unpredictable/unstable)
+   * List of files as regular expression flakey (occasionally only picks up one file, not all!?)
    * For testing templateUrl in directives, need to use the ng-html2js-preprocessor plugin, which can be a bit magical to set up. When working it loads all templates and exposes in an angular module for tests to use.
 * Test file naming convention is foo.spec.js
 
