@@ -15,12 +15,14 @@ Open-source MVC DI (Dependency Injection) framework maintained by Google suited 
 * For readability, parameters can have underscores which are ignored at runtime (i.e. _foo_ is the same as foo, but allows developers to easily differentiate)
 * Prototypical inheritance and scopes can be a bit hairy
 * IE8 support discontinued in Angular 1.3, IE8 compatibility issues with 1.2 (e.g. <ng-form> directive)
+* Sharing the same name for a radio button group within an ng-repeat causes user actions (e.g. clicking radios) to be shared between all repeatable blocks! Work for inputs. Inconsistent.
 
 ## Components
 
 * [Grunt](http://gruntjs.com/) for running tasks (builds, starting server, watching for changes and reloading)
 * [Bower](http://bower.io/) for front-end dependency management (e.g. jQuery)
 * [npm](https://www.npmjs.org/) (Node Package Manager) for back-end Node dependency management (e.g. xml2json)
+* [Angular-Validator](https://github.com/turinggroup/angular-validator) for flexible input validation
 
 ## Concepts
 
@@ -265,6 +267,7 @@ JSTL (Java Standard Tag Library) semantic tag attributes for Angular. Great for 
 * Attribute expressions are PAINFUL
   * If directives have inner HTML, must remove attributes off the parent element. Issue removing expression attributes required using a prefix (e.g. 'data-id' instead of 'id')
   * Dynamically setting a directive name attribute causes ng-pattern validation to break?!
+  * ng-show/hide based on form elements doesn't work with expressions
   * Requires complex workarounds -- big oversight
   * Inconsistency between attributes (e.g. ng-if takes 'foo.bar' but ng-require takes '{{foo.bar}}') -- should gracefully fallback
   * For access to the actual variable (not the expression), must call $compile within a directive. This can cause an infinite loop, and requires setting terminal:true and priority:10000 to ensure it gets compiled first.
