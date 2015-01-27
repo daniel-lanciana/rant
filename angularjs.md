@@ -16,6 +16,8 @@ Open-source MVC DI (Dependency Injection) framework maintained by Google suited 
 * Prototypical inheritance and scopes can be a bit hairy
 * IE8 support discontinued in Angular 1.3, IE8 compatibility issues with 1.2 (e.g. <ng-form> directive)
 * Sharing the same name for a radio button group within an ng-repeat causes user actions (e.g. clicking radios) to be shared between all repeatable blocks! Work for inputs. Inconsistent.
+* Non-intuitive error messages (e.g. "Failed to instantiate module app")
+* Code-repetition (adding a dependecy = bower/npm, index, angular.module, karma.conf, karma IDE-only)
 
 ## Components
 
