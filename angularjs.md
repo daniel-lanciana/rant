@@ -388,6 +388,43 @@ angular.module('myApp')
    * For testing templateUrl in directives, need to use the ng-html2js-preprocessor plugin, which can be a bit magical to set up. When working it loads all templates and exposes in an angular module for tests to use.
 * Test file naming convention is foo.spec.js
 
+```javascript
+// Mocking a .constant('myConfig')
+var config;
+
+beforeEach(function() {
+  module('app', function ($provide) {
+    $provide.constant('myConfig', config);
+  });
+});
+
+// Dependency Injecting http, promises and scope into the MyService service 
+var myService;
+
+beforeEach(inject(function (MyService, $httpBackend, $q, $rootScope) {
+  myService = MyService;
+  httpBackend = $httpBackend;
+  q = $q;
+  scope = $rootScope;
+}));
+
+// Testing a REST URL with a returned promise
+describe('creating a new assessment', function () {
+  it('should call the endpoint', function () {
+    myService.doSomething();
+    httpBackend.expect('GET', 'http://foo.com').respond(200, '');
+    httpBackend.flush();
+    
+    promise.then(function (data) {
+      expect(data).toBe(testResponse);
+    });
+
+    // Flush the promise
+    scope.$digest();
+  });
+});  
+```
+
 ### Controller
 
 ```javascript
