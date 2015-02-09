@@ -389,6 +389,32 @@ angular.module('myApp')
 * Test file naming convention is foo.spec.js
 
 ```javascript
+// Dependency Injecting http, promises, scope and another named service ('anotherService') into the MyService service 
+var service, dependency;
+
+beforeEach(inject(function (MyService, $httpBackend, $q, $rootScope, anotherService) {
+  service = MyService;
+  dependency = anotherService;
+  
+  httpBackend = $httpBackend;
+  q = $q;
+  scope = $rootScope;
+}));
+
+// Dependecy Injecting a controller (essentially the same as a service)
+var controller, dependency;
+
+inject(function ($controller, $rootScope, anotherService) {
+  scope = $rootScope.$new();
+  dependency = anotherService;
+
+  controller = $controller('MyController', {
+    $scope: scope,
+    argument1: 'foo',
+    argument2: dependency.getBar()
+  }  
+});
+
 // Mocking a .constant('myConfig')
 var config;
 
@@ -398,15 +424,14 @@ beforeEach(function() {
   });
 });
 
-// Dependency Injecting http, promises and scope into the MyService service 
-var myService;
-
-beforeEach(inject(function (MyService, $httpBackend, $q, $rootScope) {
-  myService = MyService;
-  httpBackend = $httpBackend;
-  q = $q;
-  scope = $rootScope;
-}));
+// Stubbing a .service('myService') function isNumber()
+module(function($provide) {
+  $provide.service('myService', function() {
+    this.isNumber = jasmine.createSpy('isNumber').andCallFake(function(num) {
+      return true;
+    });
+  });
+});  
 
 // Testing a REST URL with a returned promise
 describe('creating a new assessment', function () {
