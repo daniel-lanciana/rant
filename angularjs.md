@@ -20,6 +20,7 @@ Open-source MVC DI (Dependency Injection) framework maintained by Google suited 
 * Code-repetition (adding a dependecy = bower/npm, index, angular.module, karma.conf, karma IDE-only, projectPath config)
 * Only allows direct DOM manipulation/rendering within directives
 * Angular v2 will be radically different and not backwards compatable (i.e. Play! 1 vs 2)
+* No support for dynamic form name attributes -- instead must wrap each element in an ng-form tag and use a generic name (e.g. 'foo')!
 
 ## Components
 
@@ -270,9 +271,9 @@ JSTL (Java Standard Tag Library) semantic tag attributes for Angular. Great for 
     * Collaboration between directives through controller methods (i.e. scope communication before DOM operations)
 * Attribute expressions are PAINFUL
   * If directives have inner HTML, must remove attributes off the parent element. Issue removing expression attributes required using a prefix (e.g. 'data-id' instead of 'id')
-  * Dynamically setting a directive name attribute causes ng-pattern validation to break?!
+  * Dynamically setting a directive name attribute doesn't work and causes ng-pattern validation to break
   * ng-show/hide based on form elements doesn't work with expressions
-  * Requires complex workarounds -- big oversight
+  * No simple solution (wrap in ng-form directive, complex programatic directive)
   * Inconsistency between attributes (e.g. ng-if takes 'foo.bar' but ng-require takes '{{foo.bar}}') -- should gracefully fallback
   * For access to the actual variable (not the expression), must call $compile within a directive. This can cause an infinite loop, and requires setting terminal:true and priority:10000 to ensure it gets compiled first.
   * Default ng-pattern validation does not display error messages if the name attribute contains an expression! WTF!!
