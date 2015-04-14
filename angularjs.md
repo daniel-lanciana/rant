@@ -6,7 +6,7 @@ Open-source MVC DI (Dependency Injection) framework maintained by Google suited 
 
 ## Notes
 
-* Suited for single-page ADD (API-Driven Development, RESTful backend) apps
+* Suited for single-page ADD (API-Driven Development, REemitSTful backend) apps
 * Not suited to dynamic form creation (expressions evaluated after directives causes binding issues)
 * Lots of automagic in the background -- great when working, PAINFUL when not (wiring, internal state, logs lacking)
 * Verbose -- both Javascript and directives.
@@ -21,6 +21,9 @@ Open-source MVC DI (Dependency Injection) framework maintained by Google suited 
 * Only allows direct DOM manipulation/rendering within directives
 * Angular v2 will be radically different and not backwards compatable (i.e. Play! 1 vs 2)
 * No support for dynamic form name attributes -- instead must wrap each element in an ng-form tag and use a generic name (e.g. 'foo')!
+* Always have a dot in ng-model (to ensure model is always an object, required for Javascript prototype inheritance used for scoping)
+* Don't abuse $emit and $broadcast -- can make code hard to follow and maintain
+* Controller should be lean. DOM manipulation done in directives only. Logic and AJAX done in services.
 
 ## Components
 
