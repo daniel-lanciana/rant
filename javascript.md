@@ -46,25 +46,29 @@
   
   // Delete object property. Returns true even if failed or non-existant?!
   delete foo.val;
-  
-  // Prototype inheritance (i.e. parent). Set when new object is created. Object.prototype is top of chain.
-  function Hello(message) {
-    this.message = message;
-  }
-  Hello.prototype.print = function() { console.log(this.message); }
-  var myHello = new Hello('world');   // prototype object is Hello.prototype
-  myHello.print();      // world
-  
-  // Inheritance of objects
+```
+
+## Prototype inheritance (i.e. parent object reference)
+
+Chained references to the parent object for the purposes of inheritance. Object.prototype is the top of the chain.
+
+```javascript  
+  // Example
   function Plant() {
-    this.eat = function() {};
+    this.eat = function() { console.log('yuck'); };
+    this.cook = function() { console.log('cook'); };
   };
   function Fruit(name) {
     this.name = name;
+    this.eat = function() { console.log('yum'); };
   };
+  Fruit.prototype.print = function() { console.log(this.name); }
   Fruit.prototype = new Plant();
   var banana = new Fruit('banana');
-  banana.eat();
+  banana.eat();             // yum
+  banana.prototype.eat();   // yuck
+  banana.print();           // banana
+  banana.cook();            // cook
   
   // Alternative non-standard syntax for prototype. Avoid.
   foo.__proto__.print();
@@ -73,10 +77,58 @@
   
   // Delete inherited property
   delete foo.prototype.val;
-  
-  // Convert object to string
+```
+
+## Conversion
+
+```javascript
+  // Convert object to/from string
   fooString = JSON.stringify(foo);
-  
-  // Convert JSON to object
   foo = JSON.parse(fooString);
+```
+  
+## Scope
+
+Always declare local variables otherwise treated as global!
+
+```javascript
+  // Function scope
+  var name = 'Richard';
+  function showName () {
+  	var name = 'Jack';
+	  console.log(name);    // Jack
+  }
+  console.log(name);      // Richard
+
+  // No block scope (overwrites global variable)
+  var name = 'Richard';
+  if (name) {
+	  name = 'Jack'; 
+	  console.log(name);    // Jack
+  }
+  console.log(name);      // Jack
+  
+  // SetTimeout runs in global scope
+  var bar = 123;
+  var fooj = {
+	  bar: 456,
+	  stuff: function () {
+      setTimeout (function  () {
+	      console.log(this.bar);    // 123
+      }, 100);
+	  }
+  }
+  
+  // Hoisting function takes precedence over variable declaration
+  var foo;
+  function foo() {}
+  console.log(typeof foo);  // function
+  
+  // Hoisting variable assignments takes precedence over function
+  var foo = 123;
+  function foo() {}
+  console.log(typeof foo);  // string
+  
+  // Function expressions not hoisted
+  var myName = function() {} 
 ```
