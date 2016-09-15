@@ -48,7 +48,7 @@
   delete foo.val;
 ```
 
-## Prototype inheritance (i.e. parent object reference)
+## Prototype
 
 Chained references to the parent object for the purposes of inheritance. Object.prototype is the top of the chain.
 
@@ -89,7 +89,7 @@ Chained references to the parent object for the purposes of inheritance. Object.
   
 ## Scope
 
-Always declare local variables otherwise treated as global!
+Scope chain refers to inheritance of scope (i.e. local to global). Always declare local variables otherwise treated as global!
 
 ```javascript
   // Function scope
@@ -131,4 +131,43 @@ Always declare local variables otherwise treated as global!
   
   // Function expressions not hoisted
   var myName = function() {} 
+```
+
+## Closures
+
+Inner function with access to outer function's variables and parameters. Encapsulated black box used extensively (e.g. Node.js, jQuery).
+
+```javascript
+  // Example
+  function outer(name) {
+    var prefix = 'Your name is ';
+    function inner() {
+      return prefix + name;     
+    }
+    return inner();
+  }
+  var foo = outer('Michael Jackson'); 	// Your name is Michael Jackson
+  
+  // When functions in JavaScript execute, they use the same scope chain that was in effect 
+  // when they were created. This means that even after the outer function has returned, the 
+  // inner function still has access to the outer function’s variables. 
+  foo('Michael Jordan');		// Your name is Michael Jordan
+
+  // Stores reference to outer function's variables, not the actual value, so can be updated.
+  // Douglas Crockford's module pattern.
+  function outer() {
+    var id = 123;
+    return {
+      getID: function ()  {
+        return id;
+      },
+      setID: function (newId)  {
+        id = newId;
+      }
+    }
+  }
+  var foo = outer(); 	// Outer function has returned
+  foo.getID(); 		// 123
+  foo.setID(999); 	
+  foo.getID(); 		// 999
 ```
