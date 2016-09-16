@@ -142,7 +142,7 @@ Inner function with access to outer function's variables and parameters. Encapsu
   function outer(name) {
     var prefix = 'Your name is ';
     function inner() {
-      return prefix + name;     
+      return prefix + name;
     }
     return inner();
   }
@@ -170,4 +170,30 @@ Inner function with access to outer function's variables and parameters. Encapsu
   foo.getID(); 		// 123
   foo.setID(999); 	
   foo.getID(); 		// 999
+  
+  // Outer variables by reference, value for i changes for all
+  // TODO: this example may be wrong, fix!
+  function outer() {
+    for (i = 1; i <= 3; i++) {
+      var bar = function inner() {
+        console.log(i);    
+      }
+    }  
+    return bar;
+  }
+  var foo = outer(); 	// 3, 3, 3
+  
+  // Immediately Invoked Function Expression (IIFE)
+  // TODO: this example may be wrong, fix!
+  function outer() {
+    for (i = 1; i <= 3; i++) {
+      var bar = function inner(input) {	// input is i parameter passed by value, not reference
+        return function () {
+          console.log(input);
+        } ()				// Parenthesis makes it execute immediately
+      } (i);				// Immediately invoke the function passing the i variable as a parameter
+    }  
+    return bar;
+  }
+  var foo = outer(); 	// 1, 2, 3
 ```
