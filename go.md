@@ -29,6 +29,8 @@ brew install go
 * Mux routing allows regular expressions
 * Testify assertion library
 * Use `[[override]]` in `Gopkg.toml` for dev dependencies you want to include, but aren't explicity referenced in the code (to avoid it being removed on `dep ensure`)
+* No ternary operator!
+* Liveloading with `realize` -- but no GoLand run config or debugging available..
 
 ```go
 // Structs are like classes (i.e. objects)
@@ -46,13 +48,26 @@ func (p *Person) Speak() *Person {
 }
 ```
 
+## TODO
+
+* Effective Go
+* Enforce HTTPS and subdomain (prod only)
+* Correct, modular directory structure?
+* Auto `go fmt` and linting
+* OAuth
+* React
+* Frameworks (e.g. gin)
+* Environment variables (https://github.com/caarlos0/env)
+
 ## Resources
 
-* https://gowebexamples.com
+* https://golang.org/doc/effective_go.html (book)
+* https://www.sohamkamani.com/blog/2017/09/13/how-to-build-a-web-application-in-golang/ (nice getting started guide)
+* https://gowebexamples.com (web server examples)
+* https://github.com/gorilla/handlers (libraries)
 * https://blog.questionable.services/article/testing-http-handlers-go/
-* https://github.com/gorilla/handlers
 * https://auth0.com/blog/authentication-in-golang/ (Oauth, react)
 * https://medium.com/orbs-network/big-integers-in-go-14534d0e490d
 * https://golang.org/pkg/builtin/#int16 (data types)
 * https://flaviocopes.com/go-date-time-format/
-* https://www.sohamkamani.com/blog/2017/09/13/how-to-build-a-web-application-in-golang/ (nice getting started guide!)
+
