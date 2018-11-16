@@ -31,6 +31,7 @@ brew install go
 * Use `[[override]]` in `Gopkg.toml` for dev dependencies you want to include, but aren't explicity referenced in the code (to avoid it being removed on `dep ensure`)
 * No ternary operator!
 * Liveloading with `realize` -- but no GoLand run config or debugging available..
+* Interfaces are good (allow changing of underlying implementation, can be mocked during testing)
 
 ```go
 // Structs are like classes (i.e. objects)
@@ -64,7 +65,7 @@ func (p *Person) Speak() *Person {
 * https://golang.org/doc/effective_go.html (book)
 * https://www.sohamkamani.com/blog/2017/09/13/how-to-build-a-web-application-in-golang/ (nice getting started guide)
 * https://gowebexamples.com (web server examples)
-* https://github.com/gorilla/handlers (libraries)
+* https://github.com/avelino/awesome-go (curated list of libraries)
 * https://blog.questionable.services/article/testing-http-handlers-go/
 * https://auth0.com/blog/authentication-in-golang/ (Oauth, react)
 * https://medium.com/orbs-network/big-integers-in-go-14534d0e490d
