@@ -30,7 +30,7 @@ brew install go
 * Testify assertion library
 * Use `[[override]]` in `Gopkg.toml` for dev dependencies you want to include, but aren't explicity referenced in the code (to avoid it being removed on `dep ensure`)
 * No ternary operator!
-* Liveloading with `realize` -- but no GoLand run config or debugging available..
+* Liveloading with `realize start` -- but no GoLand run config or debugging available..
 * Interfaces are good (allow changing of underlying implementation, can be mocked during testing)
 * Gorm
   * https://github.com/carrollgt91/gorm/pull/1/files (foreign key doesn't work natively)
