@@ -32,6 +32,9 @@ brew install go
 * No ternary operator!
 * Liveloading with `realize` -- but no GoLand run config or debugging available..
 * Interfaces are good (allow changing of underlying implementation, can be mocked during testing)
+* Gorm
+  * https://github.com/carrollgt91/gorm/pull/1/files (foreign key doesn't work natively)
+  * Use of sql.NullXYZ() for persisting null values (https://golang.org/pkg/database/sql/#NullInt64)
 
 ```go
 // Structs are like classes (i.e. objects)
@@ -69,6 +72,6 @@ func (p *Person) Speak() *Person {
 * https://blog.questionable.services/article/testing-http-handlers-go/
 * https://auth0.com/blog/authentication-in-golang/ (Oauth, react)
 * https://medium.com/orbs-network/big-integers-in-go-14534d0e490d
-* https://golang.org/pkg/builtin/#int16 (data types)
+* https://golang.org/pkg/builtin (data types)
 * https://flaviocopes.com/go-date-time-format/
-
+* http://gorm.io/docs/index.html and http://doc.gorm.io/advanced.html (Gorm)
