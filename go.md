@@ -35,6 +35,8 @@ brew install go
 * Gorm
   * https://github.com/carrollgt91/gorm/pull/1/files (foreign key doesn't work natively)
   * Use of sql.NullXYZ() for persisting null values (https://golang.org/pkg/database/sql/#NullInt64)
+* `http.Client` does not specify a timeout -- will just wait! (https://medium.com/@nate510/don-t-use-go-s-default-http-client-4804cb19f779)
+* Benchmarking concurrency with Apache ab tool: `ab -c 500 -n 500 http://local.tryroll.com:8080/` (may need to raise socket limit with `ulimit -n 10000`)
 
 ```go
 // Structs are like classes (i.e. objects)
