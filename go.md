@@ -77,3 +77,4 @@ func (p *Person) Speak() *Person {
 * https://golang.org/pkg/builtin (data types)
 * https://flaviocopes.com/go-date-time-format/
 * http://gorm.io/docs/index.html and http://doc.gorm.io/advanced.html (Gorm)
+* https://www.alexedwards.net/blog/organising-database-access (db patterns)
