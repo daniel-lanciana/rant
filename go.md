@@ -37,6 +37,21 @@ brew install go
   * Use of sql.NullXYZ() for persisting null values (https://golang.org/pkg/database/sql/#NullInt64)
 * `http.Client` does not specify a timeout -- will just wait! (https://medium.com/@nate510/don-t-use-go-s-default-http-client-4804cb19f779)
 * Benchmarking concurrency with Apache ab tool: `ab -c 500 -n 500 http://local.tryroll.com:8080/` (may need to raise socket limit with `ulimit -n 10000`)
+* Named return parameters (auto initialized, serves as documentation)
+* `defer` for "after" hooks in functional, not block, way
+* Gotcha: `struct` values initialized (like any `new` call) to zeroed (e.g. `int = 0`). Have to use pointers to distinguish between no value and valid `0`.
+* `new(Foo)` or `&Foo{}` are equivelant and returns a pointer, `var` returns value
+* `make([]int, 100)` applies to maps, slices and channels -- does not return pointer. In Go, generally use slices instead (pointers to underlying arrays, more powerful/flexible)
+* `map[string]int{"key":123}` unusual declaration -- would expect `map[string, int]`!
+* Print statement messy and verbose, use `glog`. Can use `fmt.Printf("%+v\n", t)` to print object `t` in full. 
+* Constants use `iota` enumerator integer
+* Implicit interfaces -- object checked at compile time to see if implements all require methods. Unusual for such an explicit language (as opposed to `type Cat struct implements Animal`.
+* Each file can have an `init()` func to setup state. Types can implement multiple interfaces.
+* Can define a method for any type except pointers and interfaces. Can write a method for a function!
+* `import _ "pg"` for the package side-effects, don't cleanup on `dev ensure`
+* Subclassing interfaces within interfaces, handled by imported type. Embedding methods into structs from elsewhere (forwarding).
+* `interface{}` for generic objects (e.g. generic map `make(map[string]interface{}, 0)`) 
+* Default JSON unmarshal types: `bool`, `float64` for numbers, `string`, `[]interface{}` for arrays, `map[string]interface{}` for JSON objects, `nil`
 
 ```go
 // Structs are like classes (i.e. objects)
