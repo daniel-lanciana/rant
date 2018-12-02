@@ -52,6 +52,7 @@ brew install go
 * Subclassing interfaces within interfaces, handled by imported type. Embedding methods into structs from elsewhere (forwarding).
 * `interface{}` for generic objects (e.g. generic map `make(map[string]interface{}, 0)`) 
 * Default JSON unmarshal types: `bool`, `float64` for numbers, `string`, `[]interface{}` for arrays, `map[string]interface{}` for JSON objects, `nil`
+* `<nil>` can occur when redeclaring between incompatable types (e.g. assign `err` to `error`, then reasign to `common.Error`). Causes problems because `err != nil` will be `true` even though value is `<nil>`!
 
 ```go
 // Structs are like classes (i.e. objects)
