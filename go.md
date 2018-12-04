@@ -14,7 +14,7 @@ brew install go
 * Place project under `$GOPATH/src/github.com/your-username/your-repo/` (otherwise import issues)
 * Import using absolution path (e.g. `github.com/foo/bar`). Checks local project path first, then globally installed packages.
 * Web server built-in (`net/http`)
-* Lots of single-character variable names!
+* Lots of single-character variable names! Also prefer `foo.Bar()` to `foo.GetBar()` and `foo.String()` over `foo.ToString()`. KISS.
 * Functions need to start with an uppercase to be exportable (i.e. public) -- little bit of implicit magic..
 * Set `$GOBIN` to use terminal commands
 * Use `deps` for package management (places dependencies under `/vendor`) -- otherwise everything will be placed alongside your project in `$GOPATH/src/`
@@ -30,6 +30,7 @@ brew install go
 * Testify assertion library
 * Use `[[override]]` in `Gopkg.toml` for dev dependencies you want to include, but aren't explicity referenced in the code (to avoid it being removed on `dep ensure`)
 * No ternary operator!
+* Reason statements are defined as name_type (e.g. foo int) is because of simple semicolon insertion rules of compiler
 * Liveloading with `realize start` -- but no GoLand run config or debugging available..
 * Interfaces are good (allow changing of underlying implementation, can be mocked during testing)
 * Gorm
@@ -53,12 +54,34 @@ brew install go
 * `interface{}` for generic objects (e.g. generic map `make(map[string]interface{}, 0)`) 
 * Default JSON unmarshal types: `bool`, `float64` for numbers, `string`, `[]interface{}` for arrays, `map[string]interface{}` for JSON objects, `nil`
 * `<nil>` can occur when redeclaring between incompatable types (e.g. assign `err` to `error`, then reasign to `common.Error`). Causes problems because `err != nil` will be `true` even though value is `<nil>`!
+* Use interfaces (e.g. `connect()`), encapsulated structs (e.g. wrap `*sql.Sql` as `DB` struct), embedded types (mixins), and type methods (e.g. `func (d DB) connect()...`) A LOT. Makes swapping concrete implementations easy, testable with mocks. 
+* big.Int
+  * Only `*big.Int` has the JSON marshall method
+  * Parsing from string: `i, ok := new(big.Int).SetString(intString, 10)`
+  * Not compatable with Gorm (must explicitly define column as `bigint`)
+  * Needed for working with Ethereum uint256 types of smart contracts 
 
 ```go
 // Structs are like classes (i.e. objects)
 type Person struct {
   name  string
 }
+p := Person{ Name:"dan" }
+
+// Or if just containing one embedded types
+type Counter struct {
+    n int
+}
+// Same as
+type Counter int
+
+// And can have embedded (unnamed) types
+type Foo struct {
+  Bar
+}
+b := Bar{} // has method stuff()
+f := Foo{Bar{}}
+f.stuff() // Bar's methods are embedded at the root-level (i.e. mixins)
 
 // Structs can have methods (i.e. behaviors)
 // Parameters after 'func' define it as an extension to that struct
@@ -68,18 +91,25 @@ func (p *Person) Speak() *Person {
   // Return self to allow for functional chaining of calls
   return p
 }
+
+// Testing a range
+func TestCalculate(t *testing.T) {
+	assert := assert.New(t)
+
+	var tests = []struct {
+		input    int
+		expected int
+	}{
+		{2, 4},
+		{-5, -3},
+		{99999, 100001},
+	}
+
+	for _, test := range tests {
+		assert.Equal(Calculate(test.input), test.expected)
+	}
+}
 ```
-
-## TODO
-
-* Effective Go
-* Enforce HTTPS and subdomain (prod only)
-* Correct, modular directory structure?
-* Auto `go fmt` and linting
-* OAuth
-* React
-* Frameworks (e.g. gin)
-* Environment variables (https://github.com/caarlos0/env)
 
 ## Resources
 
