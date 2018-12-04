@@ -60,6 +60,7 @@ brew install go
   * Parsing from string: `i, ok := new(big.Int).SetString(intString, 10)`
   * Not compatable with Gorm (must explicitly define column as `bigint`)
   * Needed for working with Ethereum uint256 types of smart contracts 
+* GoLand runs `go fmt` (on commit) and linting on code automatically  
 
 ```go
 // Structs are like classes (i.e. objects)
