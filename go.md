@@ -60,12 +60,14 @@ brew install go
   * Parsing from string: `i, ok := new(big.Int).SetString(intString, 10)`
   * Not compatable with Gorm (must explicitly define column as `bigint`)
   * Needed for working with Ethereum uint256 types of smart contracts 
+  * Doesn't save to database! Use https://github.com/shopspring/decimal
 * GoLand runs `go fmt` (on commit) and linting on code automatically  
 * Place tests in same directory/package, with `_test.go`. Used subsolder `testdata` to store fixtures and expectations, then just compare. Root-level `test` directory for integration tests (i.e. those that span many packages).
 * Naming: `common` (over `shared`).
 * Interface pattern to name the interface with uppercase (e.g. `Wallet`) and the concrete struct implementation lowercase (e.g. `wallet`). Alternative is more specitivity to the concrete implementation (e.g. `BitcoinWallet`).
 * Add comments to interface methods.
 * Define flags and environment variables in `var (...)` or `const (...)` blocks, then call `flag.Parse()`.
+* Flag parse error running tests, run `dep ensure -update`
 
 ```go
 // Structs are like classes (i.e. objects)
