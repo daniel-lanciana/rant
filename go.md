@@ -68,6 +68,7 @@ brew install go
 * Add comments to interface methods.
 * Define flags and environment variables in `var (...)` or `const (...)` blocks, then call `flag.Parse()`.
 * Flag parse error running tests, run `dep ensure -update`
+* Embedded types: `type Foo int`, autobox `abc := Foo(1)`, unbox `int(abc)` -- better way (should be implied)?
 
 ```go
 // Structs are like classes (i.e. objects)
