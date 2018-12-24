@@ -69,6 +69,8 @@ brew install go
 * Define flags and environment variables in `var (...)` or `const (...)` blocks, then call `flag.Parse()`.
 * Flag parse error running tests, run `dep ensure -update`
 * Embedded types: `type Foo int`, autobox `abc := Foo(1)`, unbox `int(abc)` -- better way (should be implied)?
+* Multiple line strings (i.e. code blocks) by wrapping in \` (text will contain tabs and newline characters)
+* Gorm doesn't preload assocications for polymorphic associations -- must be fetched manually
 
 ```go
 // Structs are like classes (i.e. objects)
