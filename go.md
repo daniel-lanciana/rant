@@ -73,6 +73,7 @@ brew install go
 * Embedded types: `type Foo int`, autobox `abc := Foo(1)`, unbox `int(abc)` -- better way (should be implied)?
 * Multiple line strings (i.e. code blocks) by wrapping in \` (text will contain tabs and newline characters)
 * Gorm doesn't preload assocications for polymorphic associations -- must be fetched manually
+* Double asterisk `case **uint64, if *t == nil`, `case *uint64, if *t == 0`. Pointer to a pointer..?
 
 ```go
 // Structs are like classes (i.e. objects)
