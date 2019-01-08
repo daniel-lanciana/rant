@@ -124,6 +124,16 @@ func TestCalculate(t *testing.T) {
 }
 ```
 
+## godocs
+
+```bash
+# Serve docs in browser
+godoc -http=:6060
+ 
+# When docs serverd, generate a single HTML page
+godoc -url "http://localhost:6060/pkg/github.com/my-project/my-module/" > foo.html
+````
+
 ## Resources
 
 * https://golang.org/doc/effective_go.html (book)
