@@ -74,6 +74,7 @@ brew install go
 * Multiple line strings (i.e. code blocks) by wrapping in \` (text will contain tabs and newline characters)
 * Gorm doesn't preload assocications for polymorphic associations -- must be fetched manually
 * Double asterisk `case **uint64, if *t == nil`, `case *uint64, if *t == 0`. Pointer to a pointer..?
+* Less verbose method-level error handling on the horizon in Go2
 
 ```go
 // Structs are like classes (i.e. objects)
@@ -123,6 +124,37 @@ func TestCalculate(t *testing.T) {
 		assert.Equal(Calculate(test.input), test.expected)
 	}
 }
+```
+## Promotion
+
+By inlcuding a nameless type within another type (i.e. struct), all the embedded type's exported (i.e. uppercase) properties and methods are available to the parent type.
+
+* Possible to embed values, pointers or interfaces
+* Embedded struct has no access to the parent (embedding)
+* Not possible to typecase to the embedding struct
+* Conflicting method signatures will compile, but throw runtime errors when used!
+* Can't embed within an interface
+
+```go
+// Embedded
+type Ball struct {
+    Radius   int
+    Material string
+}
+
+// Method on embedded
+func (b Ball) Bounce() {
+    fmt.Printf("Bouncing ball %+v\n", b)
+}
+
+// Parent
+type Football struct {
+    Ball
+}
+
+fb := Football{} // {Ball:{Radius:0 Material:}}
+fb := Football{Ball{Radius: 5, Material: "leather"}} // Set
+fb.Bounce() // or fb.Ball.Bounce() // Bouncing ball {Radius:5 Material:leather}
 ```
 
 ## godocs
