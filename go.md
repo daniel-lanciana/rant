@@ -167,6 +167,38 @@ godoc -http=:6060
 godoc -url "http://localhost:6060/pkg/github.com/my-project/my-module/" > foo.html
 ````
 
+## Cool things
+
+```go
+// Test tables
+var indexRuneTests = []struct {
+    s    string
+    rune rune
+    out  int
+}{
+    {"a A x", 'A', 2},
+    {"some_text=some_value", '=', 9},
+}
+
+// Embedded lock
+var hits struct {
+    sync.Mutex
+    n int
+}
+
+hits.Lock()
+hits.n++
+hits.Unlock()
+
+// Safely typecasting
+ierr, ok := err.(*imgproxyError)
+
+// Scopes (database-level only?)
+func Proposed(db store.Store) store.Store {
+   return db.Where("status_id = (SELECT id FROM statuses WHERE name = ?)", string(StatusProposed))
+}
+```
+
 ## Resources
 
 * https://golang.org/doc/effective_go.html (book)
