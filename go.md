@@ -75,6 +75,7 @@ brew install go
 * Gorm doesn't preload assocications for polymorphic associations -- must be fetched manually
 * Double asterisk `case **uint64, if *t == nil`, `case *uint64, if *t == 0`. Pointer to a pointer..?
 * Less verbose method-level error handling on the horizon in Go2
+* Internal packages to restrict public APIs e.g. a package `/a/b/c/internal/d/e/f` can be imported only by code in the directory tree rooted at `/a/b/c`. It cannot be imported by code in `/a/b/g` or in any other repository. 
 
 ```go
 // Structs are like classes (i.e. objects)
@@ -212,3 +213,4 @@ func Proposed(db store.Store) store.Store {
 * https://flaviocopes.com/go-date-time-format/
 * http://gorm.io/docs/index.html and http://doc.gorm.io/advanced.html (Gorm)
 * https://www.alexedwards.net/blog/organising-database-access (db patterns)
+* https://dave.cheney.net/practical-go/presentations/qcon-china.html (Go practical guide)
